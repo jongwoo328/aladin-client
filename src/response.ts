@@ -1,0 +1,40 @@
+export type ErrorResponse = {
+	errorCode: number;
+	errorMessage: string;
+};
+
+export type SearchItemResponseItem = {
+	title: string;
+	link: string;
+	author: string;
+	pubDate: string;
+	description: string;
+	creator: string;
+	isbn: string;
+	isbn13: string;
+	itemId: number;
+	priceSales: number;
+	priceStandard: number;
+	stockStatus: string;
+	mileage: number;
+	cover: string;
+	categoryId: number;
+	categoryName: string;
+	publisher: string;
+	customerReviewRank: number;
+};
+
+export type SearchItemResponse = {
+	version: string;
+	title: string;
+	link: string;
+	pubDate: string;
+	imageUrl: string;
+	totalResults: number;
+	startIndex: number;
+	itemsPerPage: number;
+	query: string;
+	searchCategoryId: number;
+	searchCategoryName: string;
+	item: SearchItemResponseItem[];
+};
