@@ -21,7 +21,7 @@ describe("Aladin listItems", () => {
 		});
 
 		if (!isSuccess(result)) {
-			console.error(result.error.message)
+			console.error(result.error.message);
 			throw new Error("Result is not success");
 		}
 		expect(result.success).toEqual(true);

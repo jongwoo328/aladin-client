@@ -1,7 +1,4 @@
-import {
-	isNullish,
-	stringifyValue,
-} from "./util";
+import { isNullish, sanitizeJsonLikeString, stringifyValue } from "./util";
 import { SearchItemRequestRaw } from "./types/api/requests";
 import { ErrorResponse, SearchItemResponse } from "./types/api/responses";
 import { ListItemRequestRaw } from "./types/api/requests/listItems";
@@ -104,12 +101,9 @@ export class Aladin {
 		}
 
 		let parsed: SearchItemResponse | ErrorResponse;
+		const rawText = await response.text();
 		try {
-			let rawText = await response.text();
-			if (rawText.at(-1) === ";") {
-				rawText = rawText.slice(0, -1);
-			}
-			parsed = eval?.(`"use strict";(${rawText})`)
+			parsed = JSON.parse(sanitizeJsonLikeString(rawText));
 		} catch (e) {
 			return {
 				success: false,
@@ -235,12 +229,9 @@ export class Aladin {
 		}
 
 		let parsed: ListItemResponse<ListItem> | ErrorResponse;
+		const rawText = await response.text();
 		try {
-			let rawText = await response.text();
-			if (rawText.at(-1) === ";") {
-				rawText = rawText.slice(0, -1);
-			}
-			parsed = eval?.(`"use strict";(${rawText})`)
+			parsed = JSON.parse(sanitizeJsonLikeString(rawText));
 		} catch (e) {
 			return {
 				success: false,

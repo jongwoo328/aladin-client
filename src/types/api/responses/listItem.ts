@@ -5,11 +5,11 @@ export type ListItemSeriesInfo = {
 };
 
 export type ListItemSubInfo = {
-	eBookList?: unknown[]
-	usedList?: unknown[]
-	newBookList?: unknown[]
-	paperBookList?: unknown[]
-}
+	eBookList?: unknown[];
+	usedList?: unknown[];
+	newBookList?: unknown[];
+	paperBookList?: unknown[];
+};
 
 export type ListItem = {
 	title: string;
@@ -37,7 +37,7 @@ export type ListItem = {
 	seriesInfo?: ListItemSeriesInfo;
 	subInfo?: ListItemSubInfo;
 	itemId: number;
-}
+};
 
 export type ListItemResponse<T> = {
 	title: string;

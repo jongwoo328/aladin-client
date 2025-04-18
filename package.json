@@ -7,10 +7,7 @@
 		"format": "pnpm biome format --write .",
 		"build": "tsup"
 	},
-	"keywords": [
-		"aladin",
-		"api"
-	],
+	"keywords": ["aladin", "api"],
 	"engines": {
 		"node": ">=18.0.0"
 	},
