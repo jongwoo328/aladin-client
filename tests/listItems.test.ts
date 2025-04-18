@@ -18,13 +18,12 @@ describe("Aladin listItems", () => {
 			queryType: "ItemNewAll",
 			searchTarget: "eBook",
 			version: "20131101",
-			start: 3,
 		});
 
 		if (!isSuccess(result)) {
+			console.error(result.error.message)
 			throw new Error("Result is not success");
 		}
-
 		expect(result.success).toEqual(true);
 		expect(result.data.item).toBeInstanceOf(Array);
 	});

@@ -15,7 +15,7 @@ describe("Aladin searchItems", () => {
 
 		const result = await aladin.searchItems({
 			query: "love",
-			searchTarget: "Music",
+			searchTarget: "Book",
 		});
 
 		if (!isSuccess(result)) {

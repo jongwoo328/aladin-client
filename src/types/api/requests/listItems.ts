@@ -17,7 +17,7 @@ export type ListItemRequestRaw = {
 	MaxResults?: number;
 	Cover?: Cover;
 	CategoryId?: number;
-	Output?: "xml";
+	Output?: "js";
 	Partner?: string;
 	includeKey?: number;
 	InputEncoding?: "utf-8";

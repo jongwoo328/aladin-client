@@ -1,7 +1,5 @@
 import {
-	isErrorObject,
 	isNullish,
-	parseStringToBool,
 	stringifyValue,
 } from "./util";
 import { SearchItemRequestRaw } from "./types/api/requests";
@@ -14,7 +12,6 @@ import {
 	SearchItemRequest,
 } from "./types/lib";
 import { AladinError, AladinErrorTypes } from "./errors";
-import { XMLParser } from "fast-xml-parser";
 
 export class Aladin {
 	ttbKey: string;
@@ -46,7 +43,7 @@ export class Aladin {
 		const paramsData: SearchItemRequestRaw = {
 			ttbkey: this.ttbKey,
 			Query: request.query,
-			Output: "xml",
+			Output: "js",
 			InputEncoding: "utf-8",
 		};
 		if (!isNullish(request.queryType)) {
@@ -107,37 +104,12 @@ export class Aladin {
 		}
 
 		let parsed: SearchItemResponse | ErrorResponse;
-		const xmlParser = new XMLParser({
-			ignoreAttributes: (attrName) => {
-				return attrName !== "itemId";
-			},
-			isArray: (name) => {
-				return name === "item";
-			},
-			attributeNamePrefix: "",
-			parseTagValue: false,
-			parseAttributeValue: false,
-		});
 		try {
-			const rawText = await response.text();
-			parsed = xmlParser.parse(rawText).object;
-			if (!isErrorObject(parsed)) {
-				if (!parsed.item) {
-					parsed.item = [];
-				}
-				parsed.totalResults = Number(parsed.totalResults);
-				parsed.startIndex = Number(parsed.startIndex);
-				parsed.itemsPerPage = Number(parsed.itemsPerPage);
-				parsed.searchCategoryId = Number(parsed.searchCategoryId);
-				parsed.item.forEach((item) => {
-					item.priceSales = Number(item.priceSales);
-					item.priceStandard = Number(item.priceStandard);
-					item.mileage = Number(item.mileage);
-					item.categoryId = Number(item.categoryId);
-					item.customerReviewRank = Number(item.customerReviewRank);
-					item.itemId = Number(item.itemId);
-				});
+			let rawText = await response.text();
+			if (rawText.at(-1) === ";") {
+				rawText = rawText.slice(0, -1);
 			}
+			parsed = eval?.(`"use strict";(${rawText})`)
 		} catch (e) {
 			return {
 				success: false,
@@ -198,7 +170,7 @@ export class Aladin {
 		const paramsData: ListItemRequestRaw = {
 			ttbkey: this.ttbKey,
 			QueryType: request.queryType,
-			Output: "xml",
+			Output: "js",
 			InputEncoding: "utf-8",
 		};
 		if (!isNullish(request.searchTarget)) {
@@ -248,7 +220,6 @@ export class Aladin {
 
 		let response: Response;
 		try {
-			console.log(`${url}?${params.toString()}`);
 			response = await fetch(`${url}?${params.toString()}`, {
 				method: "GET",
 			});
@@ -264,71 +235,12 @@ export class Aladin {
 		}
 
 		let parsed: ListItemResponse<ListItem> | ErrorResponse;
-		const xmlParser = new XMLParser({
-			attributeNamePrefix: "",
-			ignoreAttributes: (attrName) => {
-				return attrName !== "itemId";
-			},
-			isArray: (name) => {
-				return (
-					name === "item" || name === "paperBookList" || name === "paperBook"
-				);
-			},
-			parseTagValue: false,
-			parseAttributeValue: false,
-		});
 		try {
-			const rawText = await response.text();
-			parsed = xmlParser.parse(rawText).object;
-			if (!isErrorObject(parsed)) {
-				if (!parsed.item) {
-					parsed.item = [];
-				}
-				parsed.totalResults = Number(parsed.totalResults);
-				parsed.startIndex = Number(parsed.startIndex);
-				parsed.itemsPerPage = Number(parsed.itemsPerPage);
-				parsed.searchCategoryId = Number(parsed.searchCategoryId);
-				parsed.item.map((item) => {
-					item.priceSales = Number(item.priceSales);
-					item.priceStandard = Number(item.priceStandard);
-					item.mileage = Number(item.mileage);
-					item.categoryId = Number(item.categoryId);
-					item.customerReviewRank = Number(item.customerReviewRank);
-					item.itemId = Number(item.itemId);
-					item.adult = parseStringToBool(item.adult);
-					if ("salesPoint" in item) {
-						item.salesPoint = Number(item.salesPoint);
-					}
-					if ("fixedPrice" in item) {
-						item.fixedPrice = parseStringToBool(item.fixedPrice);
-					}
-					if ("seriesInfo" in item && typeof item.seriesInfo === "object") {
-						item.seriesInfo.seriesId = Number(item.seriesInfo.seriesId);
-					}
-					if ("subInfo" in item) {
-						if (!item.subInfo) {
-							item.subInfo = null;
-						} else if ("paperBookList" in item.subInfo) {
-							if (!item.subInfo.paperBookList) {
-								item.subInfo.paperBookList = [];
-							} else {
-								item.subInfo.paperBookList = item.subInfo.paperBookList
-									// @ts-ignore
-									.flatMap((entry) => entry.paperBook)
-									.map((paperBook) => {
-										return {
-											itemId: Number(paperBook.itemId),
-											isbn: paperBook.isbn,
-											isbn13: paperBook.isbn13,
-											priceSales: Number(paperBook.priceSales),
-											link: paperBook.link,
-										};
-									});
-							}
-						}
-					}
-				});
+			let rawText = await response.text();
+			if (rawText.at(-1) === ";") {
+				rawText = rawText.slice(0, -1);
 			}
+			parsed = eval?.(`"use strict";(${rawText})`)
 		} catch (e) {
 			return {
 				success: false,
