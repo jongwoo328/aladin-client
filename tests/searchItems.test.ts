@@ -1,5 +1,7 @@
-const { Aladin } = require("../src");
-const { key } = require("./key.json");
+import { isSuccess } from "../src/helper";
+
+import { Aladin } from "../src";
+import { key } from "./key.json";
 
 describe("Aladin searchItems", () => {
 	let apiKey = "";
@@ -9,23 +11,27 @@ describe("Aladin searchItems", () => {
 	});
 
 	it("Simple search test", async () => {
-		const aladin = new Aladin(apiKey);
+		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.searchItems({
-			query: "AladinAPI",
+			query: "hello",
+			searchTarget: "Music",
 		});
 
-		expect(result).toBeDefined();
-		expect(result.item).toBeInstanceOf(Array);
+		if (!isSuccess(result)) {
+			throw new Error("Result is not success");
+		}
+		expect(result.success).toEqual(true);
+		expect(result.data.item).toBeInstanceOf(Array);
 	});
 
 	it("Query is required", async () => {
-		const aladin = new Aladin(apiKey);
+		const aladin = new Aladin({ ttbKey: apiKey });
 
-		await expect(
-			aladin.searchItems({
-				query: "",
-			}),
-		).rejects.toThrow();
+		const result = await aladin.searchItems({
+			query: "",
+		});
+
+		expect(result.success).toEqual(false);
 	});
 });

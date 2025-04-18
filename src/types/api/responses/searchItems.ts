@@ -1,9 +1,4 @@
-export type ErrorResponse = {
-	errorCode: number;
-	errorMessage: string;
-};
-
-export type SearchItemResponseItem = {
+export type SearchItem = {
 	title: string;
 	link: string;
 	author: string;
@@ -23,7 +18,6 @@ export type SearchItemResponseItem = {
 	publisher: string;
 	customerReviewRank: number;
 };
-
 export type SearchItemResponse = {
 	version: string;
 	title: string;
@@ -36,5 +30,5 @@ export type SearchItemResponse = {
 	query: string;
 	searchCategoryId: number;
 	searchCategoryName: string;
-	item: SearchItemResponseItem[];
+	item: SearchItem[];
 };

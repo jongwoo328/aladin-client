@@ -18,3 +18,12 @@ export function trimEndSemiColon(text: string): string {
 	}
 	return text;
 }
+
+export function isNullish(value: any): value is null | undefined {
+	return value === null || value === undefined;
+}
+
+export function sanitizeJsonString(text: string): string {
+	const safeText = text.replaceAll("\r\n", "\\n");
+	return safeText;
+}
