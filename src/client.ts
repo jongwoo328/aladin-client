@@ -79,7 +79,7 @@ export class Aladin {
 			paramsData.Version = request.version;
 		}
 		if (!isNullish(request.outOfStockFilter)) {
-			paramsData.outofStockFilter = request.outOfStockFilter;
+			paramsData.outofStockfilter = request.outOfStockFilter;
 		}
 		if (!isNullish(request.recentPublishFilter)) {
 			paramsData.RecentPublishFilter = request.recentPublishFilter;
@@ -201,7 +201,7 @@ export class Aladin {
 			paramsData.Version = request.version;
 		}
 		if (!isNullish(request.outOfStockFilter)) {
-			paramsData.outofStockFilter = request.outOfStockFilter;
+			paramsData.outofStockfilter = request.outOfStockFilter;
 		}
 		if (!isNullish(request.year)) {
 			paramsData.Year = request.year;

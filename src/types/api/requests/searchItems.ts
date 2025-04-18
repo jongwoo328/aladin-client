@@ -26,7 +26,7 @@ export type SearchItemRequestRaw = {
 	includeKey?: number;
 	InputEncoding?: "utf-8";
 	Version?: string;
-	outofStockFilter?: number;
+	outofStockfilter?: number;
 	RecentPublishFilter?: number;
 	OptResult?: SearchOptResult[];
 };

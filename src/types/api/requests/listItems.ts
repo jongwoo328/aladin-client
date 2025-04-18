@@ -22,7 +22,7 @@ export type ListItemRequestRaw = {
 	includeKey?: number;
 	InputEncoding?: "utf-8";
 	Version?: string;
-	outofStockFilter?: number;
+	outofStockfilter?: number;
 	Year?: number;
 	Month?: number;
 	Week?: number;
