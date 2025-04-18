@@ -7,7 +7,6 @@ export type SearchItem = {
 	creator: string;
 	isbn: string;
 	isbn13: string;
-	itemId: number;
 	priceSales: number;
 	priceStandard: number;
 	stockStatus: string;
@@ -17,17 +16,19 @@ export type SearchItem = {
 	categoryName: string;
 	publisher: string;
 	customerReviewRank: number;
+	itemId: number;
 };
 export type SearchItemResponse = {
-	version: string;
 	title: string;
 	link: string;
+	language: string;
+	copyright: string;
 	pubDate: string;
-	imageUrl: string;
 	totalResults: number;
 	startIndex: number;
 	itemsPerPage: number;
 	query: string;
+	version: string;
 	searchCategoryId: number;
 	searchCategoryName: string;
 	item: SearchItem[];

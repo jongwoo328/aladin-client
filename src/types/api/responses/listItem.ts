@@ -1,3 +1,9 @@
+export type ListItemSeriesInfo = {
+	seriesId: number;
+	seriesName: string;
+	seriesLink: string;
+};
+
 export type ListDVDItem = {
 	title: string;
 	link: string;
@@ -6,20 +12,20 @@ export type ListDVDItem = {
 	description: string;
 	isbn: string;
 	isbn13: string;
-	itemId: number;
 	priceSales: number;
 	priceStandard: number;
-	mallType: string;
+	mallType: "DVD";
 	stockStatus: string;
 	mileage: number;
 	cover: string;
 	categoryId: number;
 	categoryName: string;
 	publisher: string;
-	salesPoint: number;
 	adult: boolean;
 	customerReviewRank: number;
-	subInfo: Record<string, unknown>;
+	subInfo: null;
+	itemId: number;
+	salesPoint: number;
 };
 export type ListBookItem = {
 	title: string;
@@ -29,10 +35,58 @@ export type ListBookItem = {
 	description: string;
 	isbn: string;
 	isbn13: string;
-	itemId: number;
 	priceSales: number;
 	priceStandard: number;
-	mallType: string; // 필요시 다른 타입도 추가 가능
+	mallType: "BOOK";
+	stockStatus: string;
+	mileage: number;
+	cover: string;
+	categoryId: number;
+	categoryName: string;
+	publisher: string;
+	adult: boolean;
+	fixedPrice: boolean;
+	customerReviewRank: number;
+	seriesInfo: ListItemSeriesInfo;
+	subInfo: null;
+	itemId: number;
+	salesPoint: number;
+};
+export type ListMusicItem = {
+	title: string;
+	link: string;
+	author: string;
+	pubDate: string;
+	description: string;
+	isbn: string;
+	isbn13: string;
+	priceSales: number;
+	priceStandard: number;
+	mallType: "MUSIC";
+	stockStatus: string;
+	mileage: number;
+	cover: string;
+	categoryId: number;
+	categoryName: string;
+	publisher: string;
+	adult: boolean;
+	customerReviewRank: number;
+	subInfo: null;
+	itemId: number;
+	seriesInfo: ListItemSeriesInfo;
+	salesPoint: number;
+};
+export type ListEbookItem = {
+	title: string;
+	link: string;
+	author: string;
+	pubDate: string;
+	description: string;
+	isbn: string;
+	isbn13: string;
+	priceSales: number;
+	priceStandard: number;
+	mallType: "EBOOK";
 	stockStatus: string;
 	mileage: number;
 	cover: string;
@@ -43,23 +97,33 @@ export type ListBookItem = {
 	adult: boolean;
 	fixedPrice: boolean;
 	customerReviewRank: number;
-	seriesInfo: {
-		seriesId: number;
-		seriesName: string;
-		seriesLink: string;
+	seriesInfo: ListItemSeriesInfo;
+	subInfo: {
+		paperBookList: {
+			itemId: number;
+			isbn: string;
+			isbn13: string;
+			priceSales: number;
+			link: string;
+		}[];
 	};
-	subInfo: Record<string, unknown>;
+	itemId: number;
 };
+export type ListItem =
+	| ListBookItem
+	| ListDVDItem
+	| ListMusicItem
+	| ListEbookItem;
 export type ListItemResponse<T> = {
-	version: string;
-	logo: string;
 	title: string;
 	link: string;
+	logo: string;
 	pubDate: string;
 	totalResults: number;
 	startIndex: number;
 	itemsPerPage: number;
 	query: string;
+	version: string;
 	searchCategoryId: number;
 	searchCategoryName: string;
 	item: T[];

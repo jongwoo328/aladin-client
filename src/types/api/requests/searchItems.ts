@@ -21,7 +21,7 @@ export type SearchItemRequestRaw = {
 	Sort?: SearchSort;
 	Cover?: Cover;
 	CategoryId?: number;
-	Output?: "js";
+	Output?: "xml";
 	Partner?: string;
 	includeKey?: number;
 	InputEncoding?: "utf-8";

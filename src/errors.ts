@@ -1,5 +1,3 @@
-import { ErrorResponse } from "./types/api/responses";
-
 export const AladinErrorTypes = {
 	ValidationError: "ValidationError",
 	ApiError: "ApiError",

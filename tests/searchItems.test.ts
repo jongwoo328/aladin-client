@@ -14,7 +14,7 @@ describe("Aladin searchItems", () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.searchItems({
-			query: "hello",
+			query: "love",
 			searchTarget: "Music",
 		});
 
@@ -32,7 +32,7 @@ describe("Aladin searchItems", () => {
 			query: "hello",
 			queryType: "Title",
 			searchTarget: "Book",
-			start: 2,
+			start: 1,
 			maxResults: 3,
 			sort: "Title",
 			cover: "Small",
@@ -41,10 +41,15 @@ describe("Aladin searchItems", () => {
 			includeKey: 1,
 			outOfStockFilter: 1,
 			recentPublishFilter: 1,
-			optResult: []
+			optResult: [],
 		});
-	})
 
+		if (!isSuccess(result)) {
+			throw new Error("Result is not success");
+		}
+		expect(result.success).toEqual(true);
+		expect(result.data.item).toBeInstanceOf(Array);
+	});
 
 	it("Query is required", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
