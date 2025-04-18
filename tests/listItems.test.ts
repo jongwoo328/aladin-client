@@ -23,8 +23,39 @@ describe("Aladin listItems", () => {
 		if (!isSuccess(result)) {
 			throw new Error("Result is not success");
 		}
+
+		expect(result.success).toEqual(true);
 		expect(result.data.item).toBeInstanceOf(Array);
 	});
+
+	it("ListItem test with full parameters", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.listItems<ListBookItem>({
+			queryType: "ItemNewAll",
+			searchTarget: "Book",
+			subSearchTarget: "Book",
+			start: 0,
+			maxResults: 5,
+			cover: "Small",
+			version: "20131101",
+			categoryId: 27660,
+			partner: "test",
+			includeKey: 1,
+			outOfStockFilter: 1,
+			year: 2025,
+			month: 4,
+			week: 1,
+			optResult: ["ebookList"]
+		});
+
+		if (!isSuccess(result)) {
+			throw new Error("Result is not success");
+		}
+
+		expect(result.success).toEqual(true)
+		expect(result.data.item).toBeInstanceOf(Array);
+	})
 
 	it("QueryType is required", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });

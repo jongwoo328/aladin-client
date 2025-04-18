@@ -25,6 +25,27 @@ describe("Aladin searchItems", () => {
 		expect(result.data.item).toBeInstanceOf(Array);
 	});
 
+	it("SearchItems test with full parameters", async () => {
+		const alain = new Aladin({ ttbKey: apiKey });
+
+		const result = await alain.searchItems({
+			query: "hello",
+			queryType: "Title",
+			searchTarget: "Book",
+			start: 2,
+			maxResults: 3,
+			sort: "Title",
+			cover: "Small",
+			categoryId: 27660,
+			partner: "test",
+			includeKey: 1,
+			outOfStockFilter: 1,
+			recentPublishFilter: 1,
+			optResult: []
+		});
+	})
+
+
 	it("Query is required", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
