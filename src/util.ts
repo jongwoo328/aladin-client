@@ -1,4 +1,6 @@
-export function stringifyValue(o: Record<string, any>): Record<string, string> {
+export function stringifyValue(
+	o: Record<string, unknown>,
+): Record<string, string> {
 	const result: Record<string, string> = {};
 	for (const key in o) {
 		if (o[key] !== undefined && o[key] !== null) {
@@ -12,13 +14,14 @@ export function stringifyValue(o: Record<string, any>): Record<string, string> {
 	return result;
 }
 
-export function isNullish(value: any): value is null | undefined {
+export function isNullish(value: unknown): value is null | undefined {
 	return value === null || value === undefined;
 }
 
 export function sanitizeJsonLikeString(s: string) {
+	let result = s;
 	if (s.trimEnd().endsWith(";")) {
-		s = s.trimEnd().slice(0, -1);
+		result = s.trimEnd().slice(0, -1);
 	}
-	return s.replaceAll("\r\n", "\n");
+	return result.replaceAll("\r\n", "\n");
 }

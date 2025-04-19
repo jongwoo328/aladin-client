@@ -1,8 +1,8 @@
 import { Aladin } from "../src";
 import { isSuccess } from "../src/helper";
-import { ListQueryType, SearchTarget } from "../src/types/api/requests";
+import type { ListQueryType, SearchTarget } from "../src/types/api/requests";
 
-const { key } = require("./key.json");
+import { key } from "./key.json";
 
 describe("Aladin listItems", () => {
 	let apiKey = "";

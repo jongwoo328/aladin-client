@@ -1,6 +1,6 @@
 // Types for ListItems API
-import { Cover, SearchTarget, SubSearchTarget } from "./common";
-import { SearchOptResult } from "./searchItems";
+import type { Cover, SearchTarget, SubSearchTarget } from "./common";
+import type { SearchOptResult } from "./searchItems";
 
 export type ListQueryType =
 	| "ItemNewAll"

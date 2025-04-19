@@ -1,14 +1,17 @@
-import { isNullish, sanitizeJsonLikeString, stringifyValue } from "./util";
-import { SearchItemRequestRaw } from "./types/api/requests";
-import { ErrorResponse, SearchItemResponse } from "./types/api/responses";
-import { ListItemRequestRaw } from "./types/api/requests/listItems";
-import { ListItem, ListItemResponse } from "./types/api/responses/listItem";
-import {
+import { type AladinError, AladinErrorTypes } from "./errors";
+import type { SearchItemRequestRaw } from "./types/api/requests";
+import type { ListItemRequestRaw } from "./types/api/requests/listItems";
+import type { ErrorResponse, SearchItemResponse } from "./types/api/responses";
+import type {
+	ListItem,
+	ListItemResponse,
+} from "./types/api/responses/listItem";
+import type {
 	AladinClientResponse,
 	ListItemRequest,
 	SearchItemRequest,
 } from "./types/lib";
-import { AladinError, AladinErrorTypes } from "./errors";
+import { isNullish, sanitizeJsonLikeString, stringifyValue } from "./util";
 
 export class Aladin {
 	ttbKey: string;

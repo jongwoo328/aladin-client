@@ -1,6 +1,4 @@
-// Types for SearchItems API
-
-import { Cover, SearchTarget } from "./common";
+import type { Cover, SearchTarget } from "./common";
 
 export type SearchQueryType = "Keyword" | "Title" | "Author" | "Publisher";
 export type SearchSort =
