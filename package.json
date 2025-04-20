@@ -21,11 +21,25 @@
 		"build": "tsup",
 		"test": "jest"
 	},
-	"keywords": ["aladin", "api"],
+	"packageManager": "pnpm@10.8.1",
+	"keywords": [
+		"aladin",
+		"aladin api",
+		"aladin open api",
+		"book search",
+		"aladin javascript",
+		"aladin typescript",
+		"aladin unofficial",
+		"ttb api"
+	],
 	"engines": {
 		"node": ">=18.0.0"
 	},
 	"author": "Lee Jongwoo (https://github.com/jongwoo328)",
+	"homepage": "https://github.com/jongwoo328/aladinjs#readme",
+	"bugs": {
+		"url": "https://github.com/jongwoo328/aladinjs/issues"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/jongwoo328/aladinjs"
