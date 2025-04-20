@@ -25,6 +25,10 @@
 		"node": ">=18.0.0"
 	},
 	"author": "Lee Jongwoo <jongwoo328@gmail.com> (https://github.com/jongwoo328)",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jongwoo328/aladinjs"
+	},
 	"license": "MIT",
 	"devDependencies": {
 		"@babel/preset-env": "7.26.9",
@@ -33,7 +37,6 @@
 		"@types/jest": "29.5.14",
 		"@types/node": "18",
 		"jest": "29.7.0",
-		"ts-node": "10.9.2",
 		"tsup": "^8.4.0",
 		"typescript": "^5.8.3"
 	}
