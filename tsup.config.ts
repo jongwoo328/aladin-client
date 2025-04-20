@@ -12,7 +12,7 @@ export default defineConfig({
 	target: "es2022",
 	outExtension({ format }) {
 		return {
-			js: format === "esm" ? ".mjs" : ".js",
+			js: format === "esm" ? ".mjs" : ".cjs",
 		};
 	},
 });
