@@ -1,20 +1,15 @@
 {
 	"name": "aladinjs",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"description": "Unofficial JavaScript library for the Aladin API",
 	"main": "dist/index.js",
 	"type": "module",
-	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"sideEffects": false,
 	"files": ["dist"],
 	"exports": {
-		"require": {
-			"default": "./dist/index.js"
-		},
-		"import": {
-			"default": "./dist/index.mjs"
-		}
+		"require": "./dist/index.js",
+		"import": "./dist/index.mjs"
 	},
 	"scripts": {
 		"format": "pnpm biome format --write .",
