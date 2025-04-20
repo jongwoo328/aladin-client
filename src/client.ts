@@ -16,9 +16,9 @@ import { type AladinError, AladinErrorTypes } from "./errors";
 import { isNullish, parseToJson, stringifyValue } from "./util";
 
 export class Aladin {
-	ttbKey: string;
-	partner?: string;
-	baseUrl = "https://www.aladin.co.kr/ttb/api";
+	private ttbKey: string;
+	private partner?: string;
+	private baseUrl = "https://www.aladin.co.kr/ttb/api";
 
 	constructor(config: { ttbKey: string; partner?: string }) {
 		if (!config.ttbKey) {
@@ -26,6 +26,22 @@ export class Aladin {
 		}
 		this.ttbKey = config.ttbKey;
 		this.partner = config.partner;
+	}
+
+	setTtbKey(ttbKey: string): Aladin {
+		if (!ttbKey) {
+			throw new Error("ttbKey is required");
+		}
+		this.ttbKey = ttbKey;
+		return this;
+	}
+
+	setPartner(partner: string): Aladin {
+		if (!partner) {
+			throw new Error("partner is required");
+		}
+		this.partner = partner;
+		return this;
 	}
 
 	async searchItems(
@@ -48,6 +64,10 @@ export class Aladin {
 			Output: "js",
 			InputEncoding: "utf-8",
 		};
+		if (this.partner) {
+			paramsData.Partner = this.partner;
+		}
+
 		if (!isNullish(request.queryType)) {
 			paramsData.QueryType = request.queryType;
 		}
@@ -172,6 +192,10 @@ export class Aladin {
 			Output: "js",
 			InputEncoding: "utf-8",
 		};
+		if (this.partner) {
+			paramsData.Partner = this.partner;
+		}
+
 		if (!isNullish(request.searchTarget)) {
 			paramsData.SearchTarget = request.searchTarget;
 		}
@@ -280,6 +304,10 @@ export class Aladin {
 			ItemId: request.itemId,
 			Output: "js",
 		};
+		if (this.partner) {
+			paramsData.Partner = this.partner;
+		}
+
 		if (!isNullish(request.itemIdType)) {
 			paramsData.ItemIdType = request.itemIdType;
 		}
