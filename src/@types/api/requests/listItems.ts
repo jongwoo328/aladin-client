@@ -1,4 +1,3 @@
-// Types for ListItems API
 import type { Cover, SearchTarget, SubSearchTarget } from "./common";
 import type { SearchOptResultItem } from "./searchItems";
 

@@ -1,18 +1,17 @@
-import type { _SearchItemRequest } from "./@types/api/requests";
-import type { _ListItemRequest } from "./@types/api/requests/listItems";
-import type { _LookupItemRequest } from "./@types/api/requests/lookupItem";
-import type { ErrorResponse, SearchItemResponse } from "./@types/api/responses";
-import type {
-	ListItem,
-	ListItemResponse,
-} from "./@types/api/responses/listItem";
-import type { LookupItemResponse } from "./@types/api/responses/lookupItem";
 import type {
 	AladinClientResponse,
+	ErrorResponse,
+	ListItem,
 	ListItemRequest,
+	ListItemResponse,
 	LookupItemRequest,
+	LookupItemResponse,
 	SearchItemRequest,
-} from "./@types/lib";
+	SearchItemResponse,
+	_ListItemRequest,
+	_LookupItemRequest,
+	_SearchItemRequest,
+} from "./@types";
 import { type AladinError, AladinErrorTypes } from "./errors";
 import { isNullish, parseToJson, stringifyValue } from "./util";
 

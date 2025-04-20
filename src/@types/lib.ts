@@ -6,11 +6,8 @@ import type {
 	SearchSort,
 	SearchTarget,
 	SubSearchTarget,
-} from "./api/requests";
-import type {
-	ItemIdType,
-	LookupOptResultItem,
-} from "./api/requests/lookupItem";
+} from "./api";
+import type { ItemIdType, LookupOptResultItem } from "./api";
 
 export type ListItemRequest = {
 	queryType: ListQueryType;
