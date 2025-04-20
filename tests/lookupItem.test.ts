@@ -8,12 +8,40 @@ describe("Aladin lookupItem", () => {
 		apiKey = key;
 	});
 
-	it("Simple lookup test", async () => {
+	it("Simple lookup test by ISBN13", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.lookupItem({
-			itemId: 106319298,
+			itemId: "9791197903007",
+			itemIdType: "ISBN13",
+		});
+
+		if (!isSuccess(result)) {
+			throw new Error(result.error.message);
+		}
+		expect(result.success).toEqual(true);
+	});
+
+	it("Simple lookup test by itemId", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.lookupItem({
+			itemId: 343667067,
 			itemIdType: "ItemId",
+		});
+
+		if (!isSuccess(result)) {
+			throw new Error(result.error.message);
+		}
+		expect(result.success).toEqual(true);
+	});
+
+	it("Simple lookup test by ISBN", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.lookupItem({
+			itemId: "K312932004",
+			itemIdType: "ISBN",
 		});
 
 		if (!isSuccess(result)) {
