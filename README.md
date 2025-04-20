@@ -23,7 +23,7 @@ pnpm add aladinjs
 - 상품 조회 (ItemLookUp.aspx)
 - 중고상품 보유 매장 검색 (ItemOffStoreList.aspx)
 
-## 사용 예제
+## 빠른 시작
 
 ```javascript
 import { Aladin } from 'aladinjs'
@@ -65,8 +65,8 @@ if (offStoreResult.success) {
 ```
 
 ## API 문서
-
-자세한 API 문서는 [여기](https://github.com/username/aladinjs/docs)에서 확인할 수 있습니다.
+- 공식 설명은 API 페이지 및 문서에서 확인 가능합니다.
+- 해당 라이브러리의 상세 API는 [API](docs/API.md) 페이지에서 확인 가능합니다.
 
 ## 개발 환경 설정
 ### 저장소 클론
