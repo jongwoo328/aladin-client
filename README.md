@@ -5,15 +5,15 @@
 ## 설치 방법
 ### npm
 ```bash
-npm install aladinjs
+npm install aladin-client
 ```
 ### yarn
 ```bash
-yarn add aladinjs
+yarn add aladin-client
 ```
 ### pnpm
 ```bash
-pnpm add aladinjs
+pnpm add aladin-client
 ```
 
 ## 기능
@@ -26,7 +26,7 @@ pnpm add aladinjs
 ## 빠른 시작
 
 ```javascript
-import { Aladin } from 'aladinjs'
+import { Aladin } from 'aladin-client'
 
 // 클라이언트 초기화
 const aladin = new Aladin({ttbKey: '<YOUR TTB KEY>'})
@@ -72,8 +72,8 @@ if (offStoreResult.success) {
 ### 저장소 클론
 ```bash
 # 저장소 클론
-git clone https://github.com/username/aladinjs.git
-cd aladinjs
+git clone https://github.com/username/aladin-client.git
+cd aladin-client
 ```
 
 ### 의존성 설치
