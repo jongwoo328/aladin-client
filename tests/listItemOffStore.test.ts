@@ -20,7 +20,6 @@ describe("Aladin listItemOffStore", () => {
 		if (!isSuccess(result)) {
 			throw new Error(result.error.message);
 		}
-		console.log(result.data);
 		expect(result.success).toEqual(true);
 	});
 });
