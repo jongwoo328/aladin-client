@@ -65,7 +65,7 @@ if (offStoreResult.success) {
 ```
 
 ## API 문서
-- 공식 설명은 API 페이지 및 문서에서 확인 가능합니다.
+- 공식 설명은 [API 페이지](https://www.aladin.co.kr/ttb/apiguide.aspx?Version=20131101) 및 [문서](https://docs.google.com/document/d/1mX-WxuoGs8Hy-QalhHcvuV17n50uGI2Sg_GHofgiePE)에서 확인 가능합니다.
 - 해당 라이브러리의 상세 API는 [API](docs/API.md) 페이지에서 확인 가능합니다.
 
 ## 개발 환경 설정
@@ -83,6 +83,7 @@ pnpm install
 
 ### 테스트 실행
 테스트 실행을 위해 `tests/` 디렉토리에 `key.json` 파일을 `key.template.json` 형식에 맞게 생성하세요.
+그 후,
 ```bash
 pnpm test
 ```
@@ -90,6 +91,11 @@ pnpm test
 ### 빌드
 ```bash
 pnpm build
+```
+
+### 코드 포맷
+```bash
+pnpm format
 ```
 
 ## 기여 방법
@@ -102,7 +108,7 @@ pnpm build
 
 ## 라이선스
 
-이 프로젝트는 MIT 라이선스로 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+이 프로젝트는 MIT 라이선스로 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참고하세요.
 
 ## 주의사항
 1. KEY 필요 
