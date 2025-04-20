@@ -24,7 +24,7 @@
 	"engines": {
 		"node": ">=18.0.0"
 	},
-	"author": "Lee Jongwoo <jongwoo328@gmail.com> (https://github.com/jongwoo328)",
+	"author": "Lee Jongwoo (https://github.com/jongwoo328)",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/jongwoo328/aladinjs"
