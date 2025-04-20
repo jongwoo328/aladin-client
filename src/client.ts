@@ -107,7 +107,6 @@ export class Aladin {
 
 		let parsed: SearchItemResponse | ErrorResponse;
 		const rawText = await response.text();
-		console.log(rawText);
 		try {
 			parsed = parseToJson(rawText);
 		} catch (e) {

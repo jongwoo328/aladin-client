@@ -21,7 +21,6 @@ describe("Aladin searchItems", () => {
 		if (!isSuccess(result)) {
 			throw new Error(result.error.message);
 		}
-		console.log(result.data);
 		expect(result.success).toEqual(true);
 		expect(result.data.item).toBeInstanceOf(Array);
 	});

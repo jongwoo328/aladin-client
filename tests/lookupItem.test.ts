@@ -62,4 +62,14 @@ describe("Aladin lookupItem", () => {
 
 		expect(result.success).toEqual(true);
 	});
+
+	it("ItemId is required", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.lookupItem({
+			itemId: null as unknown as number,
+		});
+
+		expect(result.success).toEqual(false);
+	});
 });
