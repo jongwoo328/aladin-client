@@ -25,11 +25,27 @@ export function parseToJson<T extends Record<string, unknown>>(raw: string): T {
 		jsonStr = jsonStr.slice(0, -1);
 	}
 
-	// 2. replace \' with ' (except for the case where it is preceded by \\)
+	// 2. Replace \' with ' — but only when not preceded by a backslash (i.e., ignore \\\')
+	// RegExp explanation:
+	// 1. (^|[^\\]) — capture group 1:
+	//     - either the beginning of the string (^)
+	//     - or any character that is not a backslash ([^\\])
+	// 2. \\' — matches a backslash followed by a single quote
+	// Replace with: group 1 (the safe context) + single quote
+	// Effect: unescapes \' → ', except when it's actually an escaped backslash like \\\'
 	jsonStr = jsonStr.replaceAll(/(^|[^\\])\\'/g, "$1'");
 
-	// 3. replace \r\n with \n
-	jsonStr = jsonStr.replaceAll(/\r\n/g, "\\n");
+	// 3. normalize new lines in string value
+	// Regular expression explanation:
+	// 1. " — matches the opening double quote of the string literal
+	// 2. (?:[^\\"]|\\.)* — matches the content inside the string:
+	//     - [^\\"]: any character except backslash or double quote
+	//     - \\.   : any escaped character (e.g., \n, \", \\)
+	// 3. " — matches the closing double quote
+	// Result: matches a full double-quoted string literal, including its content and escape sequences
+	jsonStr = jsonStr.replace(/"(?:[^\\"]|\\.)*"/g, (match) =>
+		match.replace(/\r\n/g, "\\n"),
+	);
 
 	return JSON.parse(jsonStr);
 }

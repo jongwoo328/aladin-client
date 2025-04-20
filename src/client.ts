@@ -2,16 +2,19 @@ import type {
 	AladinClientResponse,
 	ErrorResponse,
 	ListItem,
+	ListItemOffStoreRequest,
 	ListItemRequest,
 	ListItemResponse,
 	LookupItemRequest,
 	LookupItemResponse,
 	SearchItemRequest,
 	SearchItemResponse,
+	_ListItemOffStoreRequest,
 	_ListItemRequest,
 	_LookupItemRequest,
 	_SearchItemRequest,
 } from "./@types";
+import type { ListItemOffStoreResponse } from "./@types/api/responses/listItemOffStore";
 import { type AladinError, AladinErrorTypes } from "./errors";
 import { isNullish, parseToJson, stringifyValue } from "./util";
 
@@ -342,6 +345,81 @@ export class Aladin {
 
 		let parsed: LookupItemResponse | ErrorResponse;
 		const rawText = await response.text();
+		try {
+			parsed = parseToJson(rawText);
+		} catch (e) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.ParseError,
+					message: e instanceof Error ? e.message : "Parse error",
+					raw: e,
+				},
+			};
+		}
+
+		if ("errorCode" in parsed) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.ApiError,
+					message: `Error: ${parsed.errorCode} ${parsed.errorMessage}`,
+					raw: parsed,
+				},
+			};
+		}
+
+		return { success: true, data: parsed };
+	}
+
+	async listItemOffStore(
+		request: ListItemOffStoreRequest,
+	): Promise<AladinClientResponse<ListItemOffStoreResponse, AladinError>> {
+		if (!request.itemId) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.ValidationError,
+					message: "ItemId is required",
+				},
+			};
+		}
+
+		const url = `${this.baseUrl}/ItemOffStoreList.aspx`;
+		const paramsData: _ListItemOffStoreRequest = {
+			ttbkey: this.ttbKey,
+			ItemId: request.itemId,
+			Output: "js",
+			InputEncoding: "utf-8",
+		};
+
+		if (!isNullish(request.itemIdType)) {
+			paramsData.ItemIdType = request.itemIdType;
+		}
+
+		const params = new URLSearchParams(stringifyValue(paramsData));
+
+		let response: Response;
+		try {
+			console.log(`${url}?${params.toString()}`);
+			response = await fetch(`${url}?${params.toString()}`, {
+				method: "GET",
+			});
+		} catch (e) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.NetworkError,
+					message: e instanceof Error ? e.message : "Network error",
+					raw: e,
+				},
+			};
+		}
+
+		let parsed: ListItemOffStoreResponse | ErrorResponse;
+		const rawText = await response.text();
+		console.log(rawText);
+		console.log(rawText.includes("\r\n"));
 		try {
 			parsed = parseToJson(rawText);
 		} catch (e) {

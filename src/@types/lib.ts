@@ -52,6 +52,11 @@ export type LookupItemRequest = {
 	offCode?: string;
 	optResult?: LookupOptResultItem[];
 };
+export type ListItemOffStoreRequest = {
+	itemId: string | number;
+	itemIdType?: ItemIdType;
+};
+
 export type AladinClientResponse<T, E> =
 	| { success: true; data: T }
 	| { success: false; error: E };

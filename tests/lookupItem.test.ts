@@ -1,5 +1,4 @@
-import { Aladin } from "../src";
-import { isSuccess } from "../src/helper";
+import { Aladin, isSuccess } from "../src";
 import { key } from "./key.json";
 
 describe("Aladin lookupItem", () => {

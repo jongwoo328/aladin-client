@@ -1,6 +1,9 @@
-import { Aladin } from "../src";
-import type { ListQueryType, SearchTarget } from "../src/@types/api/requests";
-import { isSuccess } from "../src/helper";
+import {
+	Aladin,
+	type ListQueryType,
+	type SearchTarget,
+	isSuccess,
+} from "../src";
 
 import { key } from "./key.json";
 
