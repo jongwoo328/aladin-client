@@ -2,7 +2,9 @@
 	"name": "aladinjs",
 	"version": "0.1.0",
 	"description": "JavaScript library for the Aladin API",
-	"main": "index.js",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": ["dist"],
 	"scripts": {
 		"format": "pnpm biome format --write .",
 		"build": "tsup"
