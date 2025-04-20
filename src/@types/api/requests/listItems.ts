@@ -1,6 +1,6 @@
 // Types for ListItems API
 import type { Cover, SearchTarget, SubSearchTarget } from "./common";
-import type { SearchOptResult } from "./searchItems";
+import type { SearchOptResultItem } from "./searchItems";
 
 export type ListQueryType =
 	| "ItemNewAll"
@@ -8,7 +8,7 @@ export type ListQueryType =
 	| "ItemEditorChoice"
 	| "Bestseller"
 	| "BlogBest";
-export type ListItemRequestRaw = {
+export type _ListItemRequest = {
 	ttbkey: string;
 	QueryType: ListQueryType;
 	SearchTarget?: SearchTarget;
@@ -26,5 +26,5 @@ export type ListItemRequestRaw = {
 	Year?: number;
 	Month?: number;
 	Week?: number;
-	OptResult?: SearchOptResult[];
+	OptResult?: SearchOptResultItem[];
 };

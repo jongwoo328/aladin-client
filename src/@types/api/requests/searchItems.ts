@@ -8,8 +8,8 @@ export type SearchSort =
 	| "SalesPoint"
 	| "CustomerRating"
 	| "MyReviewCount";
-export type SearchOptResult = "ebookList" | "usedList" | "fileFormatList";
-export type SearchItemRequestRaw = {
+export type SearchOptResultItem = "ebookList" | "usedList" | "fileFormatList";
+export type _SearchItemRequest = {
 	ttbkey: string;
 	Query: string;
 	QueryType?: SearchQueryType;
@@ -26,5 +26,5 @@ export type SearchItemRequestRaw = {
 	Version?: string;
 	outofStockfilter?: number;
 	RecentPublishFilter?: number;
-	OptResult?: SearchOptResult[];
+	OptResult?: SearchOptResultItem[];
 };

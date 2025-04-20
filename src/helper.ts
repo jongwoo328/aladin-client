@@ -1,4 +1,4 @@
-import type { AladinClientResponse } from "./types/lib";
+import type { AladinClientResponse } from "./@types/lib";
 
 export function isSuccess<T, E>(
 	result: AladinClientResponse<T, E>,

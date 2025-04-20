@@ -1,3 +1,11 @@
+import type {
+	EbookListItem,
+	NewBookListItem,
+	PaperBookListItem,
+	UsedList,
+	UsedType,
+} from "./common";
+
 export type ListItemSeriesInfo = {
 	seriesId: number;
 	seriesName: string;
@@ -5,10 +13,11 @@ export type ListItemSeriesInfo = {
 };
 
 export type ListItemSubInfo = {
-	eBookList?: unknown[];
-	usedList?: unknown[];
-	newBookList?: unknown[];
-	paperBookList?: unknown[];
+	eBookList?: EbookListItem[];
+	usedList?: UsedList;
+	newBookList?: NewBookListItem[];
+	paperBookList?: PaperBookListItem[];
+	usedType?: UsedType;
 };
 
 export type ListItem = {

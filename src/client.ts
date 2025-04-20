@@ -1,17 +1,20 @@
-import { type AladinError, AladinErrorTypes } from "./errors";
-import type { SearchItemRequestRaw } from "./types/api/requests";
-import type { ListItemRequestRaw } from "./types/api/requests/listItems";
-import type { ErrorResponse, SearchItemResponse } from "./types/api/responses";
+import type { _SearchItemRequest } from "./@types/api/requests";
+import type { _ListItemRequest } from "./@types/api/requests/listItems";
+import type { _LookupItemRequest } from "./@types/api/requests/lookupItem";
+import type { ErrorResponse, SearchItemResponse } from "./@types/api/responses";
 import type {
 	ListItem,
 	ListItemResponse,
-} from "./types/api/responses/listItem";
+} from "./@types/api/responses/listItem";
+import type { LookupItemResponse } from "./@types/api/responses/lookupItem";
 import type {
 	AladinClientResponse,
 	ListItemRequest,
+	LookupItemRequest,
 	SearchItemRequest,
-} from "./types/lib";
-import { isNullish, sanitizeJsonLikeString, stringifyValue } from "./util";
+} from "./@types/lib";
+import { type AladinError, AladinErrorTypes } from "./errors";
+import { isNullish, parseToJson, stringifyValue } from "./util";
 
 export class Aladin {
 	ttbKey: string;
@@ -40,7 +43,7 @@ export class Aladin {
 		}
 
 		const url = `${this.baseUrl}/ItemSearch.aspx`;
-		const paramsData: SearchItemRequestRaw = {
+		const paramsData: _SearchItemRequest = {
 			ttbkey: this.ttbKey,
 			Query: request.query,
 			Output: "js",
@@ -105,8 +108,9 @@ export class Aladin {
 
 		let parsed: SearchItemResponse | ErrorResponse;
 		const rawText = await response.text();
+		console.log(rawText);
 		try {
-			parsed = JSON.parse(sanitizeJsonLikeString(rawText));
+			parsed = parseToJson(rawText);
 		} catch (e) {
 			return {
 				success: false,
@@ -164,7 +168,7 @@ export class Aladin {
 		}
 
 		const url = `${this.baseUrl}/ItemList.aspx`;
-		const paramsData: ListItemRequestRaw = {
+		const paramsData: _ListItemRequest = {
 			ttbkey: this.ttbKey,
 			QueryType: request.queryType,
 			Output: "js",
@@ -234,7 +238,7 @@ export class Aladin {
 		let parsed: ListItemResponse<ListItem> | ErrorResponse;
 		const rawText = await response.text();
 		try {
-			parsed = JSON.parse(sanitizeJsonLikeString(rawText));
+			parsed = parseToJson(rawText);
 		} catch (e) {
 			return {
 				success: false,
@@ -256,6 +260,94 @@ export class Aladin {
 				},
 			};
 		}
+		return { success: true, data: parsed };
+	}
+
+	async lookupItem(
+		request: LookupItemRequest,
+	): Promise<AladinClientResponse<LookupItemResponse, AladinError>> {
+		if (!request.itemId) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.ValidationError,
+					message: "ItemId is required",
+				},
+			};
+		}
+
+		const url = `${this.baseUrl}/ItemLookUp.aspx`;
+		const paramsData: _LookupItemRequest = {
+			ttbkey: this.ttbKey,
+			ItemId: request.itemId,
+			Output: "js",
+		};
+		if (!isNullish(request.itemIdType)) {
+			paramsData.ItemIdType = request.itemIdType;
+		}
+		if (!isNullish(request.cover)) {
+			paramsData.Cover = request.cover;
+		}
+		if (!isNullish(request.partner)) {
+			paramsData.Partner = request.partner;
+		}
+		if (!isNullish(request.version)) {
+			paramsData.Version = request.version;
+		}
+		if (!isNullish(request.includeKey)) {
+			paramsData.includeKey = request.includeKey;
+		}
+		if (!isNullish(request.offCode)) {
+			paramsData.offCode = request.offCode;
+		}
+		if (!isNullish(request.optResult)) {
+			paramsData.OptResult = request.optResult;
+		}
+
+		const params = new URLSearchParams(stringifyValue(paramsData));
+
+		let response: Response;
+		try {
+			response = await fetch(`${url}?${params.toString()}`, {
+				method: "GET",
+			});
+		} catch (e) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.NetworkError,
+					message: e instanceof Error ? e.message : "Network error",
+					raw: e,
+				},
+			};
+		}
+
+		let parsed: LookupItemResponse | ErrorResponse;
+		const rawText = await response.text();
+		try {
+			parsed = parseToJson(rawText);
+		} catch (e) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.ParseError,
+					message: e instanceof Error ? e.message : "Parse error",
+					raw: e,
+				},
+			};
+		}
+
+		if ("errorCode" in parsed) {
+			return {
+				success: false,
+				error: {
+					type: AladinErrorTypes.ApiError,
+					message: `Error: ${parsed.errorCode} ${parsed.errorMessage}`,
+					raw: parsed,
+				},
+			};
+		}
+
 		return { success: true, data: parsed };
 	}
 }

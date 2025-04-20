@@ -1,12 +1,16 @@
 import type {
 	Cover,
 	ListQueryType,
-	SearchOptResult,
+	SearchOptResultItem,
 	SearchQueryType,
 	SearchSort,
 	SearchTarget,
 	SubSearchTarget,
 } from "./api/requests";
+import type {
+	ItemIdType,
+	LookupOptResultItem,
+} from "./api/requests/lookupItem";
 
 export type ListItemRequest = {
 	queryType: ListQueryType;
@@ -23,7 +27,7 @@ export type ListItemRequest = {
 	year?: number;
 	month?: number;
 	week?: number;
-	optResult?: SearchOptResult[];
+	optResult?: SearchOptResultItem[];
 };
 export type SearchItemRequest = {
 	query: string;
@@ -39,7 +43,17 @@ export type SearchItemRequest = {
 	version?: string;
 	outOfStockFilter?: number;
 	recentPublishFilter?: number;
-	optResult?: SearchOptResult[];
+	optResult?: SearchOptResultItem[];
+};
+export type LookupItemRequest = {
+	itemId: number | string;
+	itemIdType?: ItemIdType;
+	cover?: Cover;
+	partner?: string;
+	version?: string;
+	includeKey?: number;
+	offCode?: string;
+	optResult?: LookupOptResultItem[];
 };
 export type AladinClientResponse<T, E> =
 	| { success: true; data: T }

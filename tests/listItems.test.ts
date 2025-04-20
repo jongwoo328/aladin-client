@@ -1,6 +1,6 @@
 import { Aladin } from "../src";
+import type { ListQueryType, SearchTarget } from "../src/@types/api/requests";
 import { isSuccess } from "../src/helper";
-import type { ListQueryType, SearchTarget } from "../src/types/api/requests";
 
 import { key } from "./key.json";
 
@@ -21,8 +21,7 @@ describe("Aladin listItems", () => {
 		});
 
 		if (!isSuccess(result)) {
-			console.error(result.error.message);
-			throw new Error("Result is not success");
+			throw new Error(result.error.message);
 		}
 		expect(result.success).toEqual(true);
 		expect(result.data.item).toBeInstanceOf(Array);

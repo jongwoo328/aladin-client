@@ -1,8 +1,8 @@
 export type { SearchTarget, SubSearchTarget, Cover } from "./common";
 export type {
-	SearchItemRequestRaw,
+	_SearchItemRequest,
 	SearchSort,
-	SearchOptResult,
+	SearchOptResultItem,
 	SearchQueryType,
 } from "./searchItems";
 export type { ListQueryType } from "./listItems";
