@@ -79,16 +79,4 @@ describe("Aladin listItems", () => {
 
 		expect(result.success).toEqual(false);
 	});
-
-	it("Version is required", async () => {
-		const aladin = new Aladin({ ttbKey: apiKey });
-
-		const result = await aladin.listItems({
-			queryType: "ItemNewAll",
-			searchTarget: "Book",
-			version: null as unknown as string,
-		});
-
-		expect(result.success).toEqual(false);
-	});
 });

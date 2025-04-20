@@ -175,15 +175,6 @@ export class Aladin {
 				},
 			};
 		}
-		if (!request.version) {
-			return {
-				success: false,
-				error: {
-					type: AladinErrorTypes.ValidationError,
-					message: "Version is required",
-				},
-			};
-		}
 
 		const url = `${this.baseUrl}/ItemList.aspx`;
 		const paramsData: _ListItemRequest = {
@@ -191,6 +182,7 @@ export class Aladin {
 			QueryType: request.queryType,
 			Output: "js",
 			InputEncoding: "utf-8",
+			Version: request.version ?? "20131101",
 		};
 		if (this.partner) {
 			paramsData.Partner = this.partner;

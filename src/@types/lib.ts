@@ -11,7 +11,7 @@ import type { ItemIdType, LookupOptResultItem } from "./api";
 
 export type ListItemRequest = {
 	queryType: ListQueryType;
-	version: string;
+	version?: string;
 	searchTarget?: SearchTarget;
 	subSearchTarget?: SubSearchTarget;
 	start?: number;
