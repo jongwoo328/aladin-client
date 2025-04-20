@@ -401,7 +401,6 @@ export class Aladin {
 
 		let response: Response;
 		try {
-			console.log(`${url}?${params.toString()}`);
 			response = await fetch(`${url}?${params.toString()}`, {
 				method: "GET",
 			});
@@ -418,8 +417,6 @@ export class Aladin {
 
 		let parsed: ListItemOffStoreResponse | ErrorResponse;
 		const rawText = await response.text();
-		console.log(rawText);
-		console.log(rawText.includes("\r\n"));
 		try {
 			parsed = parseToJson(rawText);
 		} catch (e) {
