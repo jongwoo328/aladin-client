@@ -1,4 +1,4 @@
-import { Aladin, isSuccess } from "../src";
+import { Aladin, AladinErrorTypes, isSuccess } from "../src";
 import { key } from "./key.json";
 
 describe("Aladin lookupItem", () => {
@@ -8,7 +8,7 @@ describe("Aladin lookupItem", () => {
 		apiKey = key;
 	});
 
-	it("Simple lookup test by ISBN13", async () => {
+	it("lookup by ISBN13", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.lookupItem({
@@ -22,7 +22,7 @@ describe("Aladin lookupItem", () => {
 		expect(result.success).toEqual(true);
 	});
 
-	it("Simple lookup test by itemId", async () => {
+	it("lookup by ItemId", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.lookupItem({
@@ -36,7 +36,7 @@ describe("Aladin lookupItem", () => {
 		expect(result.success).toEqual(true);
 	});
 
-	it("Simple lookup test by ISBN", async () => {
+	it("lookup by ISBN", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.lookupItem({
@@ -50,7 +50,7 @@ describe("Aladin lookupItem", () => {
 		expect(result.success).toEqual(true);
 	});
 
-	it("LookupItem test with full parameters", async () => {
+	it("lookup with all optional parameters", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.lookupItem({
@@ -90,7 +90,7 @@ describe("Aladin lookupItem", () => {
 		expect(result.success).toEqual(true);
 	});
 
-	it("ItemId is required", async () => {
+	it("should fail when itemId is missing", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.lookupItem({
@@ -98,5 +98,54 @@ describe("Aladin lookupItem", () => {
 		});
 
 		expect(result.success).toEqual(false);
+	});
+
+	it("should fail with invalid ISBN", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.lookupItem({
+			itemId: "&*(0000000000",
+			itemIdType: "ISBN13",
+		});
+
+		expect(result.success).toBe(false);
+		if (!result.success) {
+			expect(result.error.type).toBe(AladinErrorTypes.ApiError);
+		}
+	});
+
+	it("lookup with setTtbKey chaining", async () => {
+		const result = await new Aladin({ ttbKey: "1" })
+			.setTtbKey(apiKey)
+			.lookupItem({
+				itemId: "9791197903007",
+				itemIdType: "ISBN13",
+			});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("lookup with offCode", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.lookupItem({
+			itemId: 343667067,
+			itemIdType: "ItemId",
+			offCode: "J1311",
+		});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("lookup with custom partner", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.lookupItem({
+			itemId: 343667067,
+			itemIdType: "ItemId",
+			partner: "testpartner",
+		});
+
+		expect(isSuccess(result)).toBe(true);
 	});
 });

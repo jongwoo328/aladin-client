@@ -1,4 +1,4 @@
-import { Aladin, isSuccess } from "../src";
+import { Aladin, AladinErrorTypes, isSuccess } from "../src";
 import { key } from "./key.json";
 
 describe("Aladin searchItems", () => {
@@ -8,54 +8,91 @@ describe("Aladin searchItems", () => {
 		apiKey = key;
 	});
 
-	it("Simple search test", async () => {
+	it("should search items with basic keyword", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.searchItems({ query: "요리" });
+
+		expect(isSuccess(result)).toBe(true);
+		if (isSuccess(result)) {
+			expect(result.data.item.length).toBeGreaterThan(0);
+		}
+	});
+
+	it("should search items by author name", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.searchItems({
-			query: "love",
-			searchTarget: "Book",
+			query: "무라카미",
+			queryType: "Author",
 		});
 
-		if (!isSuccess(result)) {
-			throw new Error(result.error.message);
-		}
-		expect(result.success).toEqual(true);
-		expect(result.data.item).toBeInstanceOf(Array);
+		expect(isSuccess(result)).toBe(true);
 	});
 
-	it("SearchItems test with full parameters", async () => {
-		const alain = new Aladin({ ttbKey: apiKey });
+	it("should search items with categoryId", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
 
-		const result = await alain.searchItems({
-			query: "hello",
-			queryType: "Title",
-			searchTarget: "Book",
-			start: 1,
-			maxResults: 3,
+		const result = await aladin.searchItems({
+			query: "다이어트",
+			categoryId: 53471, // 건강요리
+		});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("should sort results by title", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.searchItems({
+			query: "채소",
 			sort: "Title",
-			cover: "Small",
-			categoryId: 27660,
-			partner: "test",
-			includeKey: 1,
-			outOfStockFilter: 1,
-			recentPublishFilter: 1,
-			optResult: [],
 		});
 
-		if (!isSuccess(result)) {
-			throw new Error("Result is not success");
-		}
-		expect(result.success).toEqual(true);
-		expect(result.data.item).toBeInstanceOf(Array);
+		expect(isSuccess(result)).toBe(true);
 	});
 
-	it("Query is required", async () => {
+	it("should return big cover image", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.searchItems({
-			query: "",
+			query: "요리책",
+			cover: "Big",
 		});
 
-		expect(result.success).toEqual(false);
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("should filter results published in last 90 days", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.searchItems({
+			query: "비건",
+			recentPublishFilter: 90,
+		});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("should include usedList in result", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.searchItems({
+			query: "한식",
+			optResult: ["usedList"],
+		});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("should fail when query is empty", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.searchItems({ query: "" });
+
+		expect(result.success).toBe(false);
+		if (!result.success) {
+			expect(result.error.type).toBe(AladinErrorTypes.ValidationError);
+		}
 	});
 });

@@ -1,5 +1,6 @@
 import {
 	Aladin,
+	AladinErrorTypes,
 	type ListQueryType,
 	type SearchTarget,
 	isSuccess,
@@ -14,7 +15,7 @@ describe("Aladin listItems", () => {
 		apiKey = key;
 	});
 
-	it("Simple list test", async () => {
+	it("should list newly released eBooks", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.listItems({
@@ -30,7 +31,7 @@ describe("Aladin listItems", () => {
 		expect(result.data.item).toBeInstanceOf(Array);
 	});
 
-	it("ListItem test with full parameters", async () => {
+	it("should list books with all optional parameters", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.listItems({
@@ -59,7 +60,7 @@ describe("Aladin listItems", () => {
 		expect(result.data.item).toBeInstanceOf(Array);
 	});
 
-	it("QueryType is required", async () => {
+	it("should fail when queryType is missing", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.listItems({
@@ -71,7 +72,7 @@ describe("Aladin listItems", () => {
 		expect(result.success).toEqual(false);
 	});
 
-	it("SearchTarget is required", async () => {
+	it("should fail when searchTarget is missing", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.listItems({
@@ -81,5 +82,61 @@ describe("Aladin listItems", () => {
 		});
 
 		expect(result.success).toEqual(false);
+	});
+
+	it("should list weekly bestsellers in a category", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.listItems({
+			queryType: "Bestseller",
+			categoryId: 50963, // 예: 소설
+			year: 2025,
+			month: 4,
+			week: 2,
+		});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("should handle invalid categoryId gracefully", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.listItems({
+			queryType: "ItemNewAll",
+			categoryId: 99999999,
+			searchTarget: "Book",
+		});
+
+		expect(isSuccess(result)).toBe(false);
+		if (!isSuccess(result)) {
+			expect(result.error.type).toBe(AladinErrorTypes.ApiError);
+		}
+	});
+
+	it("should return only one result with maxResults = 1", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.listItems({
+			queryType: "ItemNewAll",
+			searchTarget: "Book",
+			maxResults: 1,
+		});
+
+		expect(isSuccess(result)).toBe(true);
+		if (isSuccess(result)) {
+			expect(result.data.item.length).toBeLessThanOrEqual(1);
+		}
+	});
+
+	it("should list items with setPartner chaining", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey }).setPartner("testPartner");
+
+		const result = await aladin.listItems({
+			queryType: "ItemNewAll",
+			searchTarget: "Book",
+			version: "20131101",
+		});
+
+		expect(isSuccess(result)).toBe(true);
 	});
 });
