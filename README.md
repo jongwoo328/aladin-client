@@ -1,4 +1,4 @@
-# AladinJS
+# aladin-client
 
 [알라딘 온라인 서점 API](https://www.aladin.co.kr/ttb/apiguide.aspx)를 JavaScript로 쉽게 사용할 수 있게 해주는 비공식 라이브러리입니다.
 
