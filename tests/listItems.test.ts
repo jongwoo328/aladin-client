@@ -46,9 +46,6 @@ describe("Aladin listItems", () => {
 			partner: "test",
 			includeKey: 1,
 			outOfStockFilter: 1,
-			year: 2025,
-			month: 4,
-			week: 1,
 			optResult: ["ebookList"],
 		});
 
@@ -64,7 +61,7 @@ describe("Aladin listItems", () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.listItems({
-			queryType: null as unknown as ListQueryType,
+			queryType: null as unknown as "Bestseller",
 			searchTarget: "Book",
 			version: "20131101",
 		});
@@ -93,6 +90,17 @@ describe("Aladin listItems", () => {
 			year: 2025,
 			month: 4,
 			week: 2,
+		});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
+	it("should list items without year/month/week filter", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.listItems({
+			queryType: "Bestseller",
+			categoryId: 50963, // 예: 소설
 		});
 
 		expect(isSuccess(result)).toBe(true);
