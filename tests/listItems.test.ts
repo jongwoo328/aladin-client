@@ -95,6 +95,17 @@ describe("Aladin listItems", () => {
 		expect(isSuccess(result)).toBe(true);
 	});
 
+	it("should list items without year/month/week filter", async () => {
+		const aladin = new Aladin({ ttbKey: apiKey });
+
+		const result = await aladin.listItems({
+			queryType: "Bestseller",
+			categoryId: 50963, // 예: 소설
+		});
+
+		expect(isSuccess(result)).toBe(true);
+	});
+
 	it("should handle invalid categoryId gracefully", async () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
