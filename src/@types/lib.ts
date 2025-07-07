@@ -9,8 +9,28 @@ import type {
 } from "./api";
 import type { ItemIdType, LookupOptResultItem } from "./api";
 
-export type ListItemRequest = {
-	queryType: ListQueryType;
+type BestsellerDateFields =
+	| { year: number; month: number; week: number }
+	| { year?: undefined; month?: undefined; week?: undefined };
+
+type BestsellerListItemRequest = {
+	queryType: "Bestseller";
+} & BestsellerDateFields & {
+		version?: string;
+		searchTarget?: SearchTarget;
+		subSearchTarget?: SubSearchTarget;
+		start?: number;
+		maxResults?: number;
+		cover?: Cover;
+		categoryId?: number;
+		partner?: string;
+		includeKey?: number;
+		outOfStockFilter?: number;
+		optResult?: SearchOptResultItem[];
+	};
+
+type NonBestsellerListItemRequest = {
+	queryType: Exclude<ListQueryType, "Bestseller">;
 	version?: string;
 	searchTarget?: SearchTarget;
 	subSearchTarget?: SubSearchTarget;
@@ -21,11 +41,15 @@ export type ListItemRequest = {
 	partner?: string;
 	includeKey?: number;
 	outOfStockFilter?: number;
-	year?: number;
-	month?: number;
-	week?: number;
 	optResult?: SearchOptResultItem[];
+	year?: never;
+	month?: never;
+	week?: never;
 };
+
+export type ListItemRequest =
+	| BestsellerListItemRequest
+	| NonBestsellerListItemRequest;
 export type SearchItemRequest = {
 	query: string;
 	queryType?: SearchQueryType;

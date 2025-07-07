@@ -46,9 +46,6 @@ describe("Aladin listItems", () => {
 			partner: "test",
 			includeKey: 1,
 			outOfStockFilter: 1,
-			year: 2025,
-			month: 4,
-			week: 1,
 			optResult: ["ebookList"],
 		});
 
@@ -64,7 +61,7 @@ describe("Aladin listItems", () => {
 		const aladin = new Aladin({ ttbKey: apiKey });
 
 		const result = await aladin.listItems({
-			queryType: null as unknown as ListQueryType,
+			queryType: null as unknown as "Bestseller",
 			searchTarget: "Book",
 			version: "20131101",
 		});
