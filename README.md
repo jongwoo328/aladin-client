@@ -1,5 +1,14 @@
 # aladin-client
 
+> [!WARNING]
+> **프로젝트 개발 및 유지보수 중단**
+>
+> [알라딘 OpenAPI 서비스 종료 공지](https://blog.aladin.co.kr/cscenter/17483675)에 따라 이 프로젝트의 개발 및 유지보수를 중단합니다.
+>
+> - 신규 OpenAPI 인증키 발급 종료: **2026년 9월 4일**
+> - 기존 이용자 OpenAPI 서비스 종료: **2026년 10월 30일**
+>
+
 [알라딘 온라인 서점 API](https://www.aladin.co.kr/ttb/apiguide.aspx)를 JavaScript로 쉽게 사용할 수 있게 해주는 비공식 라이브러리입니다.
 
 ## 설치 방법
@@ -99,12 +108,8 @@ pnpm format
 ```
 
 ## 기여 방법
-> 🎉 누구나 기여를 환영합니다! 버그 수정, 기능 추가, 문서 개선 등 어떤 형태든 기여는 프로젝트의 발전에 큰 도움이 됩니다.
-1. 이 저장소를 포크합니다.
-2. 새 기능 브랜치를 생성합니다 (`git checkout -b feature/amazing-feature`)
-3. 변경 사항을 커밋합니다 (`git commit -m 'Add some amazing feature'`)
-4. 브랜치에 푸시합니다 (`git push origin feature/amazing-feature`)
-5. Pull Request를 생성합니다.
+
+프로젝트 중단에 따라 신규 기능 개발 및 버그 수정 요청은 더 이상 받지 않습니다.
 
 ## 라이선스
 
@@ -112,7 +117,7 @@ pnpm format
 
 ## 주의사항
 1. KEY 필요 
-    - 이 라이브러리를 사용하기 위해서는 알라딘 API 키가 필요합니다. API 키 발급 및 이용 약관은 [알라딘 API 페이지](https://www.aladin.co.kr/ttb/apiguide.aspx)를 참조하세요.
+    - 이 라이브러리를 사용하기 위해서는 알라딘 API 키가 필요합니다. 신규 키 발급은 2026년 9월 4일 종료되었으며, 기존 키도 2026년 10월 30일 서비스 종료 후에는 사용할 수 없습니다.
     - API 사용 시 알라딘의 이용 약관을 준수해야 합니다.
 2. 비공식 라이브러리
     - 이 라이브러리는 알라딘 공식 라이브러리가 아닙니다. 따라서 알라딘 API의 변경에 따라 작동하지 않을 수 있습니다.
